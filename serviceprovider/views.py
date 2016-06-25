@@ -102,54 +102,6 @@ def entry_coordinates(id, coordinates):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class PolygonDetail(APIView):
-    """
-    Retrieve, update or delete a snippet instance.
-    """
-
-    def get_object(self, pk):
-        try:
-            return Polygon.objects.get(pk=pk)
-        except Polygon.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        polygon = self.get_object(pk)
-        serializer = ProviderSerializer(polygon)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        polygon = self.get_object(pk)
-        serializer = ProviderSerializer(polygon, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        polygon = self.get_object(pk)
-        polygon.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class CoordinateList(APIView):
-    """
-        List all polygon, or create a new snippet.
-    """
-
-    def get(self, request):
-        polygon = Polygon.objects.all()
-        serializer = PolygonSerializer(polygon, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = ProviderSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class GetPolygonData(APIView):
     """
      The API to fetch all polygons with  their coordinates matching a given lat, long
