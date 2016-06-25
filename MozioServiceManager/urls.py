@@ -18,4 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^', include('serviceprovider.urls')),
+    url(r'docs/', include('rest_framework_swagger.urls')),
 ]
