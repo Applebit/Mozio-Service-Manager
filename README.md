@@ -5,4 +5,5 @@ Solving Trasportation supplier problem
 
 #Software Requirements
 
-Read requirements.txt
+Python, Django
+For detail read requirements.txt
